@@ -27,7 +27,52 @@
         </nav>
         <main class="container__content" id="main-content">
             <div class="content__info">
-                <h1>Documentación Fase Cuatro</h1>
+                <h1>Fase Cuatro: Evaluación del Modelo</h1>
+
+                <h3>Métricas de Desempeño</h3>
+                <ul>
+                    <li><strong>Accuracy:</strong> mide la proporción de predicciones correctas sobre el total.</li>
+                    <li><strong>Precision:</strong> mide cuántas de las predicciones positivas fueron realmente
+                        positivas.</li>
+                    <li><strong>Recall:</strong> indica cuántos de los casos positivos fueron correctamente detectados.
+                    </li>
+                    <li><strong>F1-Score:</strong> balance entre precision y recall, útil cuando hay clases
+                        desbalanceadas.</li>
+                    <li><strong>ROC-AUC:</strong> representa la capacidad del modelo para distinguir entre clases.</li>
+                </ul>
+
+                <h3>Validación Cruzada</h3>
+                <p>
+                    Se aplicó validación cruzada <strong>k-fold</strong> (k=5), dividiendo los datos en varios
+                    subconjuntos para entrenar y evaluar el modelo múltiples veces.
+                    Con la validación cruzada, se reduce el riesgo de que los resultados sean extremos y se obtiene una
+                    medida más realista de qué tan bien funcionará el modelo con nuevos datos.
+                </p>
+                <p><strong>Funcionamiento:</strong></p>
+                <ol>
+                    <li>Se divide el conjunto de datos en 5 partes iguales (porque k = 5).</li>
+                    <li>El modelo se entrena 5 veces, cada vez usando 4 partes para entrenar y 1 parte diferente para
+                        probar.</li>
+                    <li>Cada parte se usa una vez como prueba y cuatro veces como entrenamiento.</li>
+                    <li>Se promedian los resultados para obtener una evaluación más precisa y confiable.</li>
+                </ol>
+
+                <h3>Análisis de Riesgos</h3>
+                <ul>
+                    <li><strong>Sobreajuste (overfitting):</strong> cuando el modelo aprende demasiado los datos de
+                        entrenamiento y no generaliza bien.</li>
+                    <li><strong>Subajuste (underfitting):</strong> cuando el modelo es demasiado simple y no logra
+                        capturar la complejidad de los datos.</li>
+                    <li><strong>Sesgos:</strong> en variables desbalanceadas, como el desequilibrio entre los casos de
+                        "Churn" y "No Churn".</li>
+                </ul>
+
+                <h3>Revisión con Expertos</h3>
+                <p>
+                    Dado que este es un proyecto académico, no se realizó una validación con expertos del dominio. Sin
+                    embargo, se procuró seguir buenas prácticas de machine learning para asegurar resultados razonables
+                    y bien fundamentados.
+                </p>
             </div>
         </main>
     </div>

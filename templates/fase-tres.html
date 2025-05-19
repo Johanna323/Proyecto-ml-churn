@@ -27,7 +27,40 @@
         </nav>
         <main class="container__content" id="main-content">
             <div class="content__info">
-                <h1>Documentación Fase Tres</h1>
+                <h1>Fase Tres:Ingeniería del Modelo</h1>
+                <h2>Ingeniería del Modelo</h2>
+
+                <h3>Selección del Algoritmo</h3>
+                <p>
+                    Se seleccionó <strong>regresión logística</strong> porque es un modelo simple, rápido y fácil de
+                    interpretar, además de ser muy efectivo para problemas de clasificación binaria como la predicción
+                    de pérdida de clientes (churn). Este algoritmo permite estimar la probabilidad de que un cliente
+                    cancele el servicio a partir de sus características demográficas, de uso y contractuales.
+                </p>
+
+                <h3>Validación</h3>
+                <p>
+                    Para validar el rendimiento del modelo se dividió el conjunto de datos en:
+                </p>
+                <ul>
+                    <li>70% para entrenamiento</li>
+                    <li>30% para prueba</li>
+                </ul>
+
+                <h3>Entrenamiento</h3>
+                <p>
+                    Se usaron datos ya procesados y transformados para entrenar un modelo de regresión logística en
+                    Python, asegurando que el entrenamiento tenga suficientes iteraciones para encontrar una buena
+                    solución.
+                </p>
+
+                <h3>Ajuste de Hiperparámetros</h3>
+                <p>
+                    Como primer paso, se ajustó el parámetro <code>max_iter=1000</code> para asegurar que el modelo
+                    converja sin errores durante el entrenamiento. Si el modelo no tiene suficientes iteraciones, podría
+                    quedarse a medio ciclo sin haber aprendido bien. Por eso, se aumenta <code>max_iter</code> a 1000,
+                    para darle tiempo de aprender correctamente.
+                </p>
             </div>
         </main>
     </div>
