@@ -31,11 +31,8 @@
                 <h2>Universidad de Cundinamarca</h2>
                 <p class="description">
                     El aprendizaje automático (<strong>Machine Learning</strong>) es una rama de la inteligencia
-                    artificial
-                    que permite a los sistemas aprender y mejorar automáticamente a partir de la experiencia sin ser
-                    programados explícitamente. Se utiliza en una amplia gama de aplicaciones, desde la predicción de
-                    datos
-                    hasta el reconocimiento de patrones en grandes volúmenes de información.
+                    artificial que permite a los sistemas aprender y mejorar automáticamente a partir de la experiencia sin ser
+                    programados explícitamente.
                 </p>
                 <p class="dtaU">
                     Por ello es necesario dar a conocer el portafolio de Machine Learning, donde se encuentran
@@ -44,6 +41,82 @@
                 <p class="team"><strong>Integrantes del proyecto:</strong></p>
                 <p>Kelly Johanna Garzon</p>
                 <p>Jenny Paola Rodriguez</p>
+                <section>
+                    <h2>Fase 1: Entendimiento del Negocio y los Datos</h2>
+
+                    <h3>Objetivos del negocio</h3>
+                    <h4>Objetivo general</h4>
+                    <p>Desarrollar e implementar una aplicación web para empresas de telecomunicaciones que le permita a sus usuarios internos (analistas, equipo de retención) interactuar en tiempo real con un modelo de Machine Learning de predicción de churn, facilitando la toma de decisiones y la ejecución de estrategias de retención.</p>
+
+                    <h4>Objetivos específicos</h4>
+                    <ul>
+                        <li>Analizar y preparar los datos históricos de clientes para detectar patrones asociados al churn.</li>
+                        <li>Entrenar y evaluar un modelo predictivo de cancelación de clientes.</li>
+                        <li>Identificar los principales factores que influyen en la cancelación de clientes.</li>
+                        <li>Proponer estrategias de retención basadas en los resultados del modelo y el análisis del comportamiento de los clientes.</li>
+                        <li>Explorar cómo la solución contribuye a la inclusión digital y a la reducción de desigualdades (ODS 10).</li>
+                    </ul>
+
+                    <h3>Justificación del proyecto</h3>
+                    <p>El presente proyecto tiene como objetivo el desarrollo de un modelo de aprendizaje automático para predecir la cancelación de servicios (churn) en el sector de telecomunicaciones, una problemática recurrente y de alto impacto económico en dicha industria. Esta iniciativa resulta especialmente pertinente dentro del contexto académico del curso de Machine Learning, ya que permite abordar un caso real que integra múltiples conceptos técnicos fundamentales, como la clasificación supervisada, el tratamiento de datos desbalanceados, la ingeniería de características y la evaluación rigurosa del desempeño de modelos.
+A través de esta propuesta, se logra una aplicación práctica de los conocimientos adquiridos en clase, recorriendo todo el ciclo de desarrollo de soluciones basadas en inteligencia artificial: desde la comprensión del problema y la exploración de los datos, hasta la implementación del modelo, la interpretación de los resultados y la formulación de recomendaciones accionables para la toma de decisiones empresariales.
+Adicionalmente, se trata de un proyecto escalable y multidisciplinario. No solo promueve el dominio de herramientas técnicas, sino que también estimula el desarrollo de competencias en análisis crítico, comunicación de resultados, trabajo colaborativo y pensamiento estratégico. El diseño de una plataforma web funcional para la interacción con el modelo refuerza el enfoque aplicado y brinda la posibilidad de integrarlo en procesos reales de negocio.
+</p>
+
+                    <h3>Integración con Objetivos de Desarrollo Sostenible</h3>
+                    <h4>ODS 8: Trabajo decente y crecimiento económico</h4>
+                    <ul>
+                        <li>Mejorar la sostenibilidad financiera de las empresas.</li>
+                        <li>Mantener a más usuarios conectados.</li>
+                        <li>Fortalecer la infraestructura digital.</li>
+                    </ul>
+
+                    <h4>ODS 10: Reducción de las desigualdades</h4>
+                    <ul>
+                        <li>Segmentación de estrategias de retención para grupos vulnerables.</li>
+                        <li>Diseño de soluciones para asegurar una conectividad equitativa.</li>
+                        <li>Toma de decisiones informadas que fomenten la inclusión digital.</li>
+                    </ul>
+
+                    <h3>Preguntas Clave</h3>
+                    <ol>
+                        <li>¿Cuál es la probabilidad de que un cliente específico cancele el servicio?</li>
+                        <li>¿Qué factores influyen en la cancelación?</li>
+                        <li>¿Qué segmentos presentan mayor riesgo de churn?</li>
+                        <li>¿Qué tan confiable es el modelo?</li>
+                        <li>¿Cómo ayuda el modelo a evitar la cancelación?</li>
+                        <li>¿Se identifican patrones temporales o de comportamiento previos a la cancelación?</li>
+                    </ol>
+
+                    <h3>Evaluación de Datos</h3>
+                    <p>El conjunto de datos proporcionado por la organización contiene información histórica de clientes con variables demográficas, de uso, contractuales y financieras. El campo objetivo indica si el cliente ha cancelado el servicio.</p>
+                    <p>Aspectos relevantes:</p>
+                    <ul>
+                        <li><strong>Campos vacíos:</strong> especialmente en <code>TotalCharges</code>.</li>
+                        <li><strong>Tipo de datos mal interpretados:</strong> como texto en lugar de numéricos.</li>
+                        <li><strong>Presencia de clases desbalanceadas:</strong> el churn es minoritario.</li>
+                    </ul>
+
+                    <h3>Análisis de viabilidad</h3>
+                    <h4>Viabilidad técnica</h4>
+                    <ul>
+                        <li>Disponibilidad de datos adecuados.</li>
+                        <li>Uso de herramientas como Python, pandas, scikit-learn.</li>
+                        <li>Recursos computacionales accesibles.</li>
+                        <li>Despliegue en aplicación web.</li>
+                    </ul>
+
+                    <h4>Viabilidad organizacional</h4>
+                    <p>El proyecto está alineado con los objetivos estratégicos de la empresa en retención de clientes.</p>
+
+                    <h4>Riesgos y limitaciones</h4>
+                    <ul>
+                        <li>Calidad de datos (valores faltantes o inconsistentes).</li>
+                        <li>Desequilibrio de clases en la variable objetivo.</li>
+                        <li>Riesgos de sesgo por variables sensibles.</li>
+                        <li>Limitaciones en actualización en tiempo real.</li>
+                    </ul>
+                </section>
             </div>
         </main>
     </div>
