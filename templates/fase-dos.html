@@ -27,7 +27,78 @@
         </nav>
         <main class="container__content" id="main-content">
             <div class="content__info">
-                <h1>Documentación Fase Dos</h1>
+                <h1>Fase Dos: Ingenieria de datos </h1>
+                <h3>Selección</h3>
+                <p>
+                    Se utilizó el archivo <em>Telco-Customer-Churn.csv</em>, el cual contiene información histórica de
+                    clientes de una empresa de telecomunicaciones. Este dataset incluye variables demográficas, de uso
+                    del servicio, condiciones contractuales y estado de cancelación (Churn).
+                </p>
+                <h3>Limpieza</h3>
+                <p>Se aplicaron las siguientes acciones para asegurar la calidad de los datos:</p>
+                <ul>
+                    <li><strong>Conversión de tipos:</strong> La columna <code>'TotalCharges'</code>, originalmente
+                        importada como texto, fue convertida a tipo numérico. Se utilizó <code>errors='coerce'</code>
+                        para manejar valores inválidos (como espacios vacíos), convirtiéndolos en NaN.</li>
+                    <li><strong>Eliminación de valores faltantes:</strong> Se eliminaron las filas con valores nulos, en
+                        particular aquellas que resultaron del paso anterior.</li>
+                    <li><strong>Eliminación de columnas irrelevantes:</strong> Se descartó la columna
+                        <code>'customerID'</code>, ya que es un identificador único sin valor predictivo.
+                    </li>
+                    <li><strong>Codificación de la variable objetivo:</strong> La variable <code>'Churn'</code> fue
+                        codificada en formato binario: Yes = 1 y No = 0.</li>
+                </ul>
+                <h3>Transformación</h3>
+                <ul>
+                    <li><strong>Codificación de variables categóricas:</strong> Se aplicó one-hot encoding a todas las
+                        variables categóricas mediante <code>pd.get_dummies</code>, generando un dataframe numérico apto
+                        para modelos de machine learning.</li>
+                    <li><strong>Normalización:</strong> Se normalizaron todas las variables utilizando
+                        <code>MinMaxScaler</code>, lo que llevó todos los valores al rango [0, 1].
+                    </li>
+                </ul>
+                <h3>Documentación</h3>
+                <table border="1" cellpadding="6" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Transformación</th>
+                            <th>Descripción</th>
+                            <th>Justificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conversión de TotalCharges</td>
+                            <td>Texto a numérico con NaN para errores</td>
+                            <td>Permitir operaciones matemáticas</td>
+                        </tr>
+                        <tr>
+                            <td>Eliminación de NaN</td>
+                            <td>Eliminación de filas incompletas</td>
+                            <td>Asegurar consistencia del dataset</td>
+                        </tr>
+                        <tr>
+                            <td>Eliminación de customerID</td>
+                            <td>Identificador irrelevante</td>
+                            <td>No aporta al análisis</td>
+                        </tr>
+                        <tr>
+                            <td>Codificación de Churn</td>
+                            <td>Yes/No a 1/0</td>
+                            <td>Requisito para modelos supervisados</td>
+                        </tr>
+                        <tr>
+                            <td>One-hot encoding</td>
+                            <td>Categóricas → Numéricas</td>
+                            <td>Transformación necesaria para modelos</td>
+                        </tr>
+                        <tr>
+                            <td>Normalización</td>
+                            <td>Escalado al rango [0, 1]</td>
+                            <td>Mejora el desempeño y estabilidad del algoritmo</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
