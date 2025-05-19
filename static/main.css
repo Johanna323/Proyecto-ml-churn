@@ -294,3 +294,25 @@ select {
     width: 100%;
     border-radius: 6px;
 }
+
+/* Tablas */
+.tabla-estilizada {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+}
+
+.tabla-estilizada th,
+.tabla-estilizada td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tabla-estilizada thead {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
