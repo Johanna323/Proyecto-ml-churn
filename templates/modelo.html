@@ -27,7 +27,21 @@
         </nav>
         <main class="container__content" id="main-content">
             <div class="content__info">
-                <h1>Modelo</h1>
+                <h1>Predicción de Churn</h1>
+
+                <h3>Sube tu archivo CSV/XLS:</h3>
+                <form action="/predecir" method="post" enctype="multipart/form-data">
+                    <input type="file" name="archivo" accept=".csv,.xls,.xlsx" required>
+                    <button class="btn btn-primary mt-2" type="submit">Predecir</button>
+                </form>
+
+                {% if tabla %}
+                <h3 class="mt-4">Resultados:</h3>
+                {{ tabla | safe }}
+                {% endif %}
+
+                <h3 class="mt-4">Matriz de Confusión del Modelo:</h3>
+                <img src="{{ url_for('static', filename='img/grafica.png') }}" class="img-fluid">
             </div>
         </main>
     </div>
