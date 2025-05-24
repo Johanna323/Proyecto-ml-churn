@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, g, send_file, url_for
 import os
 import pandas as pd
@@ -15,35 +16,57 @@ model = joblib.load('churnModel/trainedModel.pkl')
 scaler = joblib.load('churnModel/scalerModel.pkl')
 
 
+=======
+from flask import Flask, render_template, request, g, send_file, url_for
+
+app = Flask(__name__)
+
+>>>>>>> main
 @app.route("/")
 def home():
     return render_template("fase-uno.html")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 @app.route("/fase-uno")
 def phaseOne():
     return render_template("fase-uno.html")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 @app.route("/fase-dos")
 def phaseTwo():
     return render_template("fase-dos.html")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 @app.route("/fase-tres")
 def phaseThree():
     return render_template("fase-tres.html")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 @app.route("/fase-cuatro")
 def phaseFour():
     return render_template("fase-cuatro.html")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 @app.route("/fase-cinco")
 def phaseFive():
     return render_template("fase-cinco.html")
 
+<<<<<<< HEAD
 
 @app.route('/modelo-regresion-logistica', methods=['GET', 'POST'])
 def subir_archivo():
@@ -173,3 +196,8 @@ def predecir():
 
         return 'Archivo no válido'
     return redirect('/modelo-regresion-logistica')
+=======
+@app.route("/modelo")
+def model():
+    return render_template("modelo.html")
+>>>>>>> main

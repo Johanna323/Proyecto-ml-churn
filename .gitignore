@@ -50,7 +50,10 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+<<<<<<< HEAD
 .vscode/
+=======
+>>>>>>> main
 
 # Translations
 *.mo
