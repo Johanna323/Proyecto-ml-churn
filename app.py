@@ -2,11 +2,16 @@ from flask import Flask, render_template, request, g, send_file, url_for
 import os
 import pandas as pd
 import modelo_churn
+import joblib
 
 app = Flask(__name__)
 
-# Cargar el modelo y los codificadores una vez al inicio
-modelo, _ = modelo_churn.cargar_modelo()
+UPLOAD_FOLDER = 'upload-files'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+model = joblib.load('churnModel/modelo_entrenado.pkl')
+scaler = joblib.load('churnModel/escalador.pkl')
 
 @app.route("/")
 def home():
@@ -53,20 +58,3 @@ def subir_archivo():
             return render_template('regresion-logistica/resultados-regresion.html', columnas=columnas)
 
     return render_template('regresion-logistica/cargar-archivo.html')
-
-@app.route('/predecir', methods=['POST'])
-def hacer_prediccion():
-    datos = request.form
-    entrada = [
-        int(datos['gender']),
-        int(datos['SeniorCitizen']),
-        int(datos['Partner']),
-        int(datos['Dependents']),
-        int(datos['tenure']),
-        int(datos['MonthlyCharges']),
-        float(datos['TotalCharges']),
-    ]
-
-    resultado = modelo_churn.predecir(modelo, entrada)
-    prediccion = "Cliente con riesgo de cancelar" if resultado == 1 else "Cliente sin riesgo de cancelar"
-    return render_template('regresion-logistica/resultado.html', resultado=prediccion)
