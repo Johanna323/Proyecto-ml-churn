@@ -174,9 +174,9 @@ button:hover,
     box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
     text-align: left;
-    min-height: 640px;
     display: flex;
     flex-direction: column;
+    margin: 0 16px 0 0;
 }
 
 .card:hover {
@@ -296,7 +296,7 @@ select {
 }
 
 /* Tablas */
-.tabla-estilizada {
+table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -304,15 +304,70 @@ select {
     font-size: 16px;
 }
 
-.tabla-estilizada th,
-.tabla-estilizada td {
+table th,
+table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
     vertical-align: top;
 }
 
-.tabla-estilizada thead {
+table thead {
     background-color: #f5f5f5;
     font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+/* Tabla de datos mejorada */
+
+.data-table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    margin: 0 auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: white;
+    max-width: 100%;
+}
+
+.table-card {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 0;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e6f7ff;
+}
+
+.churn-si {
+    background-color: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+    text-align: center;
+}
+.churn-no {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: bold;
+    text-align: center;
+}
+
+.resume-cards-container {
+    display: flex;
 }

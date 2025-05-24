@@ -28,9 +28,9 @@
     <main class="container__content" id="main-content">
       <h2>Paso 1. Carga el archivo de datos</h2>
       <p>Selecciona el archivo .xls o .csv que deseas analizar con el software</p>
-      <form method="POST" enctype="multipart/form-data">
+      <form action="/predecir-modelo" method="post" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv,.xlsx,.xls" required />
-        <button type="submit">Subir</button>
+        <button type="submit">Predecir</button>
       </form>
     </main>
   </div>

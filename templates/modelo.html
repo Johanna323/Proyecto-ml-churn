@@ -29,19 +29,91 @@
             <div class="content__info">
                 <h1>Predicción de Churn</h1>
 
-                <h3>Sube tu archivo CSV/XLS:</h3>
-                <form action="/predecir" method="post" enctype="multipart/form-data">
-                    <input type="file" name="archivo" accept=".csv,.xls,.xlsx" required>
-                    <button class="btn btn-primary mt-2" type="submit">Predecir</button>
-                </form>
+                <div class="resume-cards-container">
+                    <div class="card">
+                        <div class="card-header">Clientes en riesgo</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ churn_si }} clientes</h5>
+                            <p class="card-text">Podrían abandonar el servicio.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Clientes estables</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ churn_no }} clientes</h5>
+                            <p class="card-text">Probablemente conservarán el servicio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Resumen por tipo de contrato</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Contrato</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in contract_summary['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ contract_summary['No'][tipo] }}</td>
+                            <td class="churn-si">{{ contract_summary['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
                 {% if tabla %}
-                <h3 class="mt-4">Resultados:</h3>
-                {{ tabla | safe }}
+                <h4 class="mt-4">Tabla de predicción detallada</h4>
+                <div class="data-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tenure</th>
+                                <th>MonthlyCharges</th>
+                                <th>Contract</th>
+                                <th>InternetService</th>
+                                <th>StreamingTV</th>
+                                <th>StreamingMovies</th>
+                                <th>Churn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in tabla %}
+                            <tr>
+                                <td>{{ row.tenure }} Meses</td>
+                                <td>{{ row.MonthlyCharges }}</td>
+                                <td>{{ row.Contract }}</td>
+                                <td>{{ row.InternetService }}</td>
+                                <td>{{ row.StreamingTV }}</td>
+                                <td>{{ row.StreamingMovies }}</td>
+                                <td class="{{ 'churn-si' if row['Predicción_Churn'] == 'Sí' else 'churn-no' }}">
+                                    {{ row['Predicción_Churn'] }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
                 {% endif %}
 
                 <h3 class="mt-4">Matriz de Confusión del Modelo:</h3>
-                <img src="{{ url_for('static', filename='img/grafica.png') }}" class="img-fluid">
+                <img src="{{ url_for('static', filename='modelImages/grafica.png') }}" class="img-fluid">
+                <h3 class="mt-4">Gráficas adicionales:</h3>
+                <img src="{{ url_for('static', filename='modelImages/grafica_contract.png') }}" class="img-fluid mb-3">
+                <img src="{{ url_for('static', filename='modelImages/grafica_internet.png') }}" class="img-fluid mb-3">
+                <img src="{{ url_for('static', filename='modelImages/grafica_phone.png') }}" class="img-fluid mb-3">
+                <img src="{{ url_for('static', filename='modelImages/grafica_streamingtv.png') }}"
+                    class="img-fluid mb-3">
+                <img src="{{ url_for('static', filename='modelImages/grafica_streamingmovies.png') }}"
+                    class="img-fluid mb-3">
+                <img src="{{ url_for('static', filename='modelImages/grafica_tenure.png') }}" class="img-fluid mb-3">
+
             </div>
         </main>
     </div>
