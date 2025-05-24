@@ -174,15 +174,9 @@ button:hover,
     box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
     text-align: left;
-<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     margin: 0 16px 0 0;
-=======
-    min-height: 640px;
-    display: flex;
-    flex-direction: column;
->>>>>>> main
 }
 
 .card:hover {
@@ -302,11 +296,7 @@ select {
 }
 
 /* Tablas */
-<<<<<<< HEAD
 table {
-=======
-.tabla-estilizada {
->>>>>>> main
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -314,20 +304,14 @@ table {
     font-size: 16px;
 }
 
-<<<<<<< HEAD
 table th,
 table td {
-=======
-.tabla-estilizada th,
-.tabla-estilizada td {
->>>>>>> main
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
     vertical-align: top;
 }
 
-<<<<<<< HEAD
 table thead {
     background-color: #f5f5f5;
     font-weight: bold;
@@ -387,9 +371,3 @@ tr:hover {
 .resume-cards-container {
     display: flex;
 }
-=======
-.tabla-estilizada thead {
-    background-color: #f5f5f5;
-    font-weight: bold;
-}
->>>>>>> main
