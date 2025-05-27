@@ -41,10 +41,11 @@ def phaseThree():
 @app.route("/fase-cuatro")
 def phaseFour():
     try:
-        with open('static/trainedImages/metricas.txt', 'r') as f:
+        with open('static/trainedImages/metricas.txt', 'r', encoding='utf-8') as f:
             contenido_metricas = f.read()
-    except FileNotFoundError:
-        contenido_metricas = "Métricas aún no disponibles. Entrena el modelo primero."
+    except UnicodeDecodeError:
+        with open('static/trainedImages/metricas.txt', 'r', encoding='latin1') as f:
+            contenido_metricas = f.read()
 
     # Extraer métricas individuales (opcional, para cards)
     resumen = {}
