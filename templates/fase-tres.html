@@ -21,21 +21,23 @@
                 <li><a href="/fase-dos">Fase Dos</a></li>
                 <li class="active"><a href="/fase-tres">Fase Tres</a></li>
                 <li><a href="/fase-cuatro">Fase Cuatro</a></li>
-                <li><a href="/fase-cinco">Fase Cinco</a></li>
                 <li><a href="/modelo-regresion-logistica">Modelo</a></li>
             </ul>
         </nav>
         <main class="container__content" id="main-content">
             <div class="content__info">
-                <h1>Fase Tres:Ingeniería del Modelo</h1>
+                <h1>Fase Tres: Ingeniería del Modelo</h1>
                 <h2>Ingeniería del Modelo</h2>
 
                 <h3>Selección del Algoritmo</h3>
                 <p>
                     Se seleccionó <strong>regresión logística</strong> porque es un modelo simple, rápido y fácil de
-                    interpretar, además de ser muy efectivo para problemas de clasificación binaria como la predicción
-                    de pérdida de clientes (churn). Este algoritmo permite estimar la probabilidad de que un cliente
-                    cancele el servicio a partir de sus características demográficas, de uso y contractuales.
+                    interpretar,
+                    además de ser muy efectivo para problemas de clasificación binaria como la predicción de pérdida de
+                    clientes
+                    (churn). Este algoritmo permite estimar la probabilidad de que un cliente cancele el servicio a
+                    partir de sus
+                    características demográficas, de uso y contractuales.
                 </p>
 
                 <h3>Validación</h3>
@@ -50,18 +52,75 @@
                 <h3>Entrenamiento</h3>
                 <p>
                     Se usaron datos ya procesados y transformados para entrenar un modelo de regresión logística en
-                    Python, asegurando que el entrenamiento tenga suficientes iteraciones para encontrar una buena
-                    solución.
+                    Python,
+                    asegurando que el entrenamiento tenga suficientes iteraciones para encontrar una buena solución.
                 </p>
 
                 <h3>Ajuste de Hiperparámetros</h3>
                 <p>
                     Como primer paso, se ajustó el parámetro <code>max_iter=1000</code> para asegurar que el modelo
-                    converja sin errores durante el entrenamiento. Si el modelo no tiene suficientes iteraciones, podría
-                    quedarse a medio ciclo sin haber aprendido bien. Por eso, se aumenta <code>max_iter</code> a 1000,
-                    para darle tiempo de aprender correctamente.
+                    converja sin
+                    errores durante el entrenamiento. Si el modelo no tiene suficientes iteraciones, podría quedarse a
+                    medio ciclo
+                    sin haber aprendido bien. Por eso, se aumenta <code>max_iter</code> a 1000, para darle tiempo de
+                    aprender
+                    correctamente.
                 </p>
+
+                <h2 class="section-title mt-5">Análisis Exploratorio de Variables Relevantes</h2>
+                <p>A continuación, se presentan las gráficas utilizadas durante el entrenamiento para comprender la
+                    influencia de ciertas variables sobre la cancelación del servicio:</p>
+
+                <div class="graphs-container mt-4">
+                    <div class="graph-card">
+                        <h4>Top 10 Variables más Influyentes</h4>
+                        <p>Gráfica generada a partir de los coeficientes del modelo. Indica las variables con mayor
+                            impacto
+                            en la predicción del churn.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/importancia_variables.png') }}"
+                            alt="Importancia de variables">
+                    </div>
+
+                    <div class="graph-card">
+                        <h4>Distribución de Churn por Antigüedad del Cliente (Tenure)</h4>
+                        <p>Clientes con menor antigüedad muestran mayor probabilidad de cancelar el servicio.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/churn_tenure.png') }}"
+                            alt="Churn vs Tenure">
+                    </div>
+
+                    <div class="graph-card">
+                        <h4>Churn según Tipo de Contrato</h4>
+                        <p>Los contratos mensuales están asociados con mayor tasa de abandono.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/churn_contract.png') }}"
+                            alt="Churn vs Contract">
+                    </div>
+
+                    <div class="graph-card">
+                        <h4>Churn según Tipo de Internet</h4>
+                        <p>Clientes con Internet por fibra óptica tienen más probabilidad de cancelar que los que usan
+                            DSL.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/churn_internet.png') }}"
+                            alt="Churn vs Internet">
+                    </div>
+
+                    <div class="graph-card">
+                        <h4>Churn y Servicio de StreamingTV</h4>
+                        <p>Este servicio adicional también presenta relación con la pérdida de clientes.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/churn_streamingtv.png') }}"
+                            alt="Churn vs StreamingTV">
+                    </div>
+
+                    <div class="graph-card mb-4">
+                        <h4>Churn y Servicio Telefónico</h4>
+                        <p>El uso o no del servicio telefónico también se asocia con la permanencia o abandono del
+                            cliente.</p>
+                        <img src="{{ url_for('static', filename='trainedImages/churn_phoneservice.png') }}"
+                            alt="Churn vs PhoneService">
+                    </div>
+                </div>
+
             </div>
+
         </main>
     </div>
     <footer>
