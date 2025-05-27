@@ -21,7 +21,7 @@
                 <li><a href="/fase-dos">Fase Dos</a></li>
                 <li><a href="/fase-tres">Fase Tres</a></li>
                 <li><a href="/fase-cuatro">Fase Cuatro</a></li>
-                <li><a href="/fase-cinco">Fase Cinco</a></li>
+
                 <li class="active"><a href="/modelo-regresion-logistica">Modelo</a></li>
             </ul>
         </nav>
@@ -101,18 +101,63 @@
 
 
                 {% endif %}
+                <h3 class="mt-5">Visualización de Resultados</h3>
+                <p class="mb-4">A continuación se presentan las gráficas generadas a partir de los datos cargados, las
+                    cuales permiten interpretar mejor los factores relacionados con la pérdida de clientes (churn).</p>
 
-                <h3 class="mt-4">Matriz de Confusión del Modelo:</h3>
-                <img src="{{ url_for('static', filename='modelImages/grafica.png') }}" class="img-fluid">
-                <h3 class="mt-4">Gráficas adicionales:</h3>
-                <img src="{{ url_for('static', filename='modelImages/grafica_contract.png') }}" class="img-fluid mb-3">
-                <img src="{{ url_for('static', filename='modelImages/grafica_internet.png') }}" class="img-fluid mb-3">
-                <img src="{{ url_for('static', filename='modelImages/grafica_phone.png') }}" class="img-fluid mb-3">
-                <img src="{{ url_for('static', filename='modelImages/grafica_streamingtv.png') }}"
-                    class="img-fluid mb-3">
-                <img src="{{ url_for('static', filename='modelImages/grafica_streamingmovies.png') }}"
-                    class="img-fluid mb-3">
-                <img src="{{ url_for('static', filename='modelImages/grafica_tenure.png') }}" class="img-fluid mb-3">
+                <div class="chart-gallery">
+
+                    <div class="chart-card">
+                        <h4>Matriz de Confusión del Modelo</h4>
+                        <p>Muestra la cantidad de aciertos y errores del modelo al clasificar clientes como propensos o
+                            no al abandono.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.grafica) }}" class="img-fluid" alt="Matriz de Confusión">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Tipo de Contrato</h4>
+                        <p>Los contratos mensuales presentan mayor índice de cancelación en comparación con contratos
+                            anuales o bianuales.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.contract) }}" class="img-fluid" alt="Gráfica Contract">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Tipo de Internet</h4>
+                        <p>Clientes con servicio de fibra óptica tienden a cancelar más que quienes usan DSL o no tienen
+                            internet.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.internet) }}" class="img-fluid" alt="Gráfica Internet">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Servicio Telefónico</h4>
+                        <p>El acceso a servicio telefónico puede influir en la decisión del cliente de mantenerse con la
+                            empresa.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.phone) }}" class="img-fluid" alt="Gráfica PhoneService">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn y Servicio de StreamingTV</h4>
+                        <p>El servicio de televisión por streaming también se asocia con la probabilidad de abandono del
+                            cliente.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingtv)  }}" class="img-fluid" alt="Gráfica StreamingTV">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn y Servicio de StreamingMovies</h4>
+                        <p>Clientes que usan servicios de películas en streaming también presentan ciertas tendencias de
+                            churn.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingmovies) }}" class="img-fluid" alt="Gráfica StreamingMovies">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Distribución de Clientes según Antigüedad</h4>
+                        <p>Clientes con menor antigüedad en el servicio tienden a cancelar más, según el análisis por
+                            grupos de tenure.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.tenure) }}" class="img-fluid" alt="Gráfica Tenure">
+                    </div>
+
+                </div>
+
 
             </div>
         </main>

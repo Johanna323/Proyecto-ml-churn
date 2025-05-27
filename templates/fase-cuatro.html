@@ -21,7 +21,6 @@
                 <li><a href="/fase-dos">Fase Dos</a></li>
                 <li><a href="/fase-tres">Fase Tres</a></li>
                 <li class="active"><a href="/fase-cuatro">Fase Cuatro</a></li>
-                <li><a href="/fase-cinco">Fase Cinco</a></li>
                 <li><a href="/modelo-regresion-logistica">Modelo</a></li>
             </ul>
         </nav>
@@ -73,6 +72,58 @@
                     embargo, se procuró seguir buenas prácticas de machine learning para asegurar resultados razonables
                     y bien fundamentados.
                 </p>
+
+                <h3>Resumen de Métricas del Modelo</h3>
+                <div class="metrics-cards">
+                    <div class="card-metric">
+                        <h4>Accuracy</h4>
+                        <p
+                            class="{% if resumen['Accuracy']|float < 0.70 %}bajo{% elif resumen['Accuracy']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Accuracy'] }}
+                        </p>
+                    </div>
+                    <div class="card-metric">
+                        <h4>Precision</h4>
+                        <p
+                            class="{% if resumen['Precision']|float < 0.70 %}bajo{% elif resumen['Precision']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Precision'] }}
+                        </p>
+                    </div>
+                    <div class="card-metric">
+                        <h4>Recall</h4>
+                        <p
+                            class="{% if resumen['Recall']|float < 0.70 %}bajo{% elif resumen['Recall']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Recall'] }}
+                        </p>
+                    </div>
+                    <div class="card-metric">
+                        <h4>F1-score</h4>
+                        <p
+                            class="{% if resumen['F1-score']|float < 0.70 %}bajo{% elif resumen['F1-score']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['F1-score'] }}
+                        </p>
+                    </div>
+                    <div class="card-metric">
+                        <h4>ROC-AUC</h4>
+                        <p
+                            class="{% if resumen['ROC-AUC']|float < 0.70 %}bajo{% elif resumen['ROC-AUC']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['ROC-AUC'] }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <h4>Interpretación de colores:</h4>
+                    <ul>
+                        <li><span class="dot bajo"></span> Bajo desempeño (&lt; 0.70)</li>
+                        <li><span class="dot medio"></span> Desempeño medio (0.70 - 0.85)</li>
+                        <li><span class="dot alto"></span> Buen desempeño (&gt; 0.85)</li>
+                    </ul>
+                </div>
+
+
+                <h3 class="mt-4">Reporte Completo del Modelo</h3>
+                <pre class="metricas-box">{{ metricas_completas }}</pre>
             </div>
         </main>
     </div>

@@ -324,7 +324,7 @@ table thead {
 .data-table-container {
     max-height: 500px;
     overflow-y: auto;
-    margin: 0 auto;
+    margin: 0 auto 24px auto;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -370,4 +370,210 @@ tr:hover {
 
 .resume-cards-container {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.resume-cards-container .card {
+    flex: 1 1 300px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.resume-cards-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.3rem;
+}
+
+.card-body {
+    padding-top: 0.5rem;
+}
+
+.card-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.metrics-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card-metric {
+    flex: 1 1 200px;
+    background-color: #f2f2f2;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.card-metric h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.card-metric p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #008080;
+    margin-top: 0.5rem;
+}
+
+.metricas-box {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-left: 4px solid #ccc;
+    font-family: monospace;
+    overflow-x: auto;
+}
+
+/* Colores condicionales para métricas */
+.bajo {
+    color: #d32f2f; /* rojo */
+    font-weight: bold;
+}
+.medio {
+    color: #f9a825; /* amarillo oscuro */
+    font-weight: bold;
+}
+.alto {
+    color: #388e3c; /* verde */
+    font-weight: bold;
+}
+
+.legend {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
+}
+
+.legend ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.legend li {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.dot.bajo {
+    background-color: #d32f2f;
+}
+
+.dot.medio {
+    background-color: #f9a825;
+}
+
+.dot.alto {
+    background-color: #388e3c;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.graphs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+}
+
+.graph-card {
+    width: 100%;
+    max-width: 850px;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.graph-card h4 {
+    font-size: 1.3rem;
+    color: #34495e;
+    margin-bottom: 0.5rem;
+}
+
+.graph-card p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.graph-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.chart-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.chart-card img {
+    width: 100%;
+}
+
+.chart-card h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.chart-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
 }

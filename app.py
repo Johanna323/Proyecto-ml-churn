@@ -4,6 +4,9 @@ import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
+from datetime import datetime
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
 
 app = Flask(__name__)
 
@@ -19,25 +22,38 @@ scaler = joblib.load('churnModel/scalerModel.pkl')
 def home():
     return render_template("fase-uno.html")
 
+
 @app.route("/fase-uno")
 def phaseOne():
     return render_template("fase-uno.html")
+
 
 @app.route("/fase-dos")
 def phaseTwo():
     return render_template("fase-dos.html")
 
+
 @app.route("/fase-tres")
 def phaseThree():
     return render_template("fase-tres.html")
 
+
 @app.route("/fase-cuatro")
 def phaseFour():
-    return render_template("fase-cuatro.html")
+    try:
+        with open('static/trainedImages/metricas.txt', 'r') as f:
+            contenido_metricas = f.read()
+    except FileNotFoundError:
+        contenido_metricas = "Métricas aún no disponibles. Entrena el modelo primero."
 
-@app.route("/fase-cinco")
-def phaseFive():
-    return render_template("fase-cinco.html")
+    # Extraer métricas individuales (opcional, para cards)
+    resumen = {}
+    for linea in contenido_metricas.splitlines():
+        if any(m in linea for m in ['Accuracy', 'Precision', 'Recall', 'F1-score', 'ROC-AUC']):
+            k, v = linea.split(':')
+            resumen[k.strip()] = v.strip()
+
+    return render_template('fase-cuatro.html', resumen=resumen, metricas_completas=contenido_metricas)
 
 
 @app.route('/modelo-regresion-logistica', methods=['GET', 'POST'])
@@ -62,6 +78,7 @@ def subir_archivo():
 
     return render_template('regresion-logistica/cargar-archivo.html')
 
+
 def plot_churn_by_column(df, column_name, output_path):
     if column_name in df.columns:
         plt.figure(figsize=(8, 5))
@@ -72,6 +89,7 @@ def plot_churn_by_column(df, column_name, output_path):
         plt.tight_layout()
         plt.savefig(output_path)
         plt.close()
+
 
 def plot_churn_ratio(df, output_path):
     plt.figure(figsize=(5, 5))
@@ -95,7 +113,8 @@ def plot_tenure_histogram(df, output_path):
     plt.tight_layout()
     plt.savefig(output_path)
     plt.close()
-    
+
+
 def churn_summary_by_column(df, column_name):
     return pd.crosstab(df[column_name], df['Predicción_Churn']).to_dict()
 
@@ -120,7 +139,6 @@ def predecir():
 
             df_user = df_user.reindex(
                 columns=model.feature_names_in_, fill_value=0)
-
             df_user_scaled = pd.DataFrame(
                 scaler.transform(df_user), columns=df_user.columns)
             predicciones = model.predict(df_user_scaled)
@@ -131,40 +149,81 @@ def predecir():
                                                                                   0: 'No', 1: 'Sí'})
 
             columnas_vista = ['tenure', 'MonthlyCharges', 'Contract', 'InternetService',
-                  'StreamingTV', 'StreamingMovies', 'Predicción_Churn']
-            tabla_individual = df_original[columnas_vista].to_dict(orient='records')
-                        
+                              'StreamingTV', 'StreamingMovies', 'Predicción_Churn']
+            tabla_individual = df_original[columnas_vista].to_dict(
+                orient='records')
+
             churn_counts = df_user['Predicción_Churn'].value_counts().to_dict()
             churn_si = churn_counts.get(1, 0)
             churn_no = churn_counts.get(0, 0)
 
             contract_summary = churn_summary_by_column(df_original, 'Contract')
-            internet_summary = churn_summary_by_column(df_original, 'InternetService')
-            phone_summary = churn_summary_by_column(df_original, 'PhoneService')
-            streaming_tv_summary = churn_summary_by_column(df_original, 'StreamingTV')
-            streaming_movies_summary = churn_summary_by_column(df_original, 'StreamingMovies')
-        
-            os.makedirs('static/modelImages', exist_ok=True)
-            plot_churn_by_column(df_original, 'gender',
-                                 'static/modelImages/grafica_genero.png')
-            plot_churn_by_column(df_original, 'PaymentMethod',
-                                 'static/modelImages/grafica_pago.png')
-            plot_churn_ratio(
-                df_original, 'static/modelImages/grafica_resumen.png')
-            plot_churn_by_column(df_original, 'Contract',
-                                 'static/modelImages/grafica_contract.png')
-            plot_churn_by_column(df_original, 'InternetService',
-                                 'static/modelImages/grafica_internet.png')
-            plot_churn_by_column(df_original, 'PhoneService',
-                                 'static/modelImages/grafica_phone.png')
-            plot_churn_by_column(df_original, 'StreamingTV',
-                                 'static/modelImages/grafica_streamingtv.png')
-            plot_churn_by_column(df_original, 'StreamingMovies',
-                                 'static/modelImages/grafica_streamingmovies.png')
-            plot_tenure_histogram(
-                df_original, 'static/modelImages/grafica_tenure.png')
+            internet_summary = churn_summary_by_column(
+                df_original, 'InternetService')
+            phone_summary = churn_summary_by_column(
+                df_original, 'PhoneService')
+            streaming_tv_summary = churn_summary_by_column(
+                df_original, 'StreamingTV')
+            streaming_movies_summary = churn_summary_by_column(
+                df_original, 'StreamingMovies')
 
-            return render_template('modelo.html', tabla=tabla_individual, churn_si=churn_si, churn_no=churn_no, contract_summary=contract_summary, internet_summary=internet_summary, phone_summary=phone_summary, streaming_tv_summary=streaming_tv_summary, streaming_movies_summary=streaming_movies_summary)
+            # Crear carpeta si no existe
+            os.makedirs('static/modelImages', exist_ok=True)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+            imagenes = {
+                'grafica': f"grafica_confusion_{timestamp}.png",
+                'genero': f'grafica_genero_{timestamp}.png',
+                'pago': f'grafica_pago_{timestamp}.png',
+                'resumen': f'grafica_resumen_{timestamp}.png',
+                'contract': f'grafica_contract_{timestamp}.png',
+                'internet': f'grafica_internet_{timestamp}.png',
+                'phone': f'grafica_phone_{timestamp}.png',
+                'streamingtv': f'grafica_streamingtv_{timestamp}.png',
+                'streamingmovies': f'grafica_streamingmovies_{timestamp}.png',
+                'tenure': f'grafica_tenure_{timestamp}.png'
+            }
+
+            # Guardar todas las gráficas
+            plot_churn_by_column(df_original, 'gender',
+                                 f'static/modelImages/{imagenes["genero"]}')
+            plot_churn_by_column(df_original, 'PaymentMethod',
+                                 f'static/modelImages/{imagenes["pago"]}')
+            plot_churn_ratio(
+                df_original, f'static/modelImages/{imagenes["resumen"]}')
+            plot_churn_by_column(df_original, 'Contract',
+                                 f'static/modelImages/{imagenes["contract"]}')
+            plot_churn_by_column(df_original, 'InternetService',
+                                 f'static/modelImages/{imagenes["internet"]}')
+            plot_churn_by_column(df_original, 'PhoneService',
+                                 f'static/modelImages/{imagenes["phone"]}')
+            plot_churn_by_column(df_original, 'StreamingTV',
+                                 f'static/modelImages/{imagenes["streamingtv"]}')
+            plot_churn_by_column(df_original, 'StreamingMovies',
+                                 f'static/modelImages/{imagenes["streamingmovies"]}')
+            plot_tenure_histogram(
+                df_original, f'static/modelImages/{imagenes["tenure"]}')
+
+            # Matriz de confusión
+            cm = confusion_matrix(df_user['Predicción_Churn'], predicciones)
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+            disp.plot(cmap='Blues')
+            plt.title("Matriz de Confusión del Modelo")
+            plt.savefig(f'static/modelImages/{imagenes["grafica"]}')
+            plt.close()
+
+            return render_template(
+                'modelo.html',
+                tabla=tabla_individual,
+                churn_si=churn_si,
+                churn_no=churn_no,
+                contract_summary=contract_summary,
+                internet_summary=internet_summary,
+                phone_summary=phone_summary,
+                streaming_tv_summary=streaming_tv_summary,
+                streaming_movies_summary=streaming_movies_summary,
+                imagenes=imagenes
+            )
 
         return 'Archivo no válido'
     return redirect('/modelo-regresion-logistica')
