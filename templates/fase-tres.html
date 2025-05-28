@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Final | CHURN</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap" rel="stylesheet">
@@ -32,88 +32,113 @@
                 <h3>Selección del Algoritmo</h3>
                 <p>
                     Se seleccionó <strong>regresión logística</strong> porque es un modelo simple, rápido y fácil de
-                    interpretar,
-                    además de ser muy efectivo para problemas de clasificación binaria como la predicción de pérdida de
-                    clientes
-                    (churn). Este algoritmo permite estimar la probabilidad de que un cliente cancele el servicio a
-                    partir de sus
-                    características demográficas, de uso y contractuales.
+                    interpretar, además de ser muy efectivo para problemas de clasificación binaria como la predicción
+                    de pérdida de clientes (churn).
                 </p>
 
                 <h3>Validación</h3>
                 <p>
-                    Para validar el rendimiento del modelo se dividió el conjunto de datos en:
+                    Se dividió el conjunto de datos en:
                 </p>
                 <ul>
                     <li>70% para entrenamiento</li>
                     <li>30% para prueba</li>
                 </ul>
 
-                <h3>Entrenamiento</h3>
-                <p>
-                    Se usaron datos ya procesados y transformados para entrenar un modelo de regresión logística en
-                    Python,
-                    asegurando que el entrenamiento tenga suficientes iteraciones para encontrar una buena solución.
-                </p>
+                <h3>Preprocesamiento y Feature Engineering</h3>
+                <p>Se aplicaron transformaciones previas al entrenamiento como:</p>
+                <ul>
+                    <li><strong>AvgMonthlySpend:</strong> gasto mensual promedio.</li>
+                    <li><strong>TotalServices:</strong> número de servicios contratados.</li>
+                    <li><strong>tenure_group:</strong> agrupación de antigüedad.</li>
+                    <li><strong>Contract_Monthly_Streaming:</strong> combinación de contrato y uso de streaming.</li>
+                </ul>
+
+                <h3>Balanceo con SMOTE</h3>
+                <p>Se utilizó <strong>SMOTE</strong> para generar instancias sintéticas de la clase minoritaria
+                    (clientes que cancelan), evitando el sesgo del modelo.</p>
 
                 <h3>Ajuste de Hiperparámetros</h3>
                 <p>
-                    Como primer paso, se ajustó el parámetro <code>max_iter=1000</code> para asegurar que el modelo
-                    converja sin
-                    errores durante el entrenamiento. Si el modelo no tiene suficientes iteraciones, podría quedarse a
-                    medio ciclo
-                    sin haber aprendido bien. Por eso, se aumenta <code>max_iter</code> a 1000, para darle tiempo de
-                    aprender
-                    correctamente.
+                    Se aplicó <code>GridSearchCV</code> para encontrar la mejor combinación de parámetros como
+                    <code>C</code>, <code>solver</code> y <code>max_iter</code>, evaluados con validación cruzada y
+                    métrica <code>f1-score</code>.
                 </p>
 
+                <h3>Validaciones de Datos</h3>
+                <p>Antes del escalado y balanceo, se validó:</p>
+                <ul>
+                    <li>Ausencia de valores nulos.</li>
+                    <li>Codificación correcta de variables categóricas.</li>
+                    <li>Imputación de valores faltantes si existían.</li>
+                </ul>
+
                 <h2 class="section-title mt-5">Análisis Exploratorio de Variables Relevantes</h2>
-                <p>A continuación, se presentan las gráficas utilizadas durante el entrenamiento para comprender la
-                    influencia de ciertas variables sobre la cancelación del servicio:</p>
+                <p>Gráficas utilizadas durante el entrenamiento para comprender la influencia de ciertas variables en la
+                    cancelación del servicio:</p>
 
                 <div class="graphs-container mt-4">
                     <div class="graph-card">
                         <h4>Top 10 Variables más Influyentes</h4>
-                        <p>Gráfica generada a partir de los coeficientes del modelo. Indica las variables con mayor
-                            impacto
-                            en la predicción del churn.</p>
+                        <p>
+                            Esta gráfica muestra las <strong>10 variables más influyentes en la predicción de
+                                cancelación del servicio (churn)</strong>
+                            según los coeficientes del modelo de regresión logística.
+                        </p>
+                        <p>
+                            El <strong>valor y signo del coeficiente</strong> indican el efecto de cada variable:
+                        <ul>
+                            <li><strong>Coeficientes positivos (color salmón):</strong> Aumentan la probabilidad de que
+                                un cliente cancele el servicio.</li>
+                            <li><strong>Coeficientes negativos (color azul):</strong> Disminuyen la probabilidad de
+                                churn, es decir, retienen al cliente.</li>
+                        </ul>
+                        </p>
+                        <p>
+                            Por ejemplo, la variable <strong>"tenure"</strong> (antigüedad del cliente) tiene un
+                            coeficiente negativo alto, lo que indica que
+                            a mayor tiempo con la empresa, <strong>menor es la probabilidad de cancelar el
+                                servicio</strong>. En contraste,
+                            tener un contrato <strong>mensual</strong> o usar <strong>Internet por fibra óptica</strong>
+                            son factores que
+                            <strong>incrementan la probabilidad de churn</strong>.
+                        </p>
                         <img src="{{ url_for('static', filename='trainedImages/importancia_variables.png') }}"
-                            alt="Importancia de variables">
+                            alt="Importancia de variables y efecto">
                     </div>
+
 
                     <div class="graph-card">
                         <h4>Distribución de Churn por Antigüedad del Cliente (Tenure)</h4>
-                        <p>Clientes con menor antigüedad muestran mayor probabilidad de cancelar el servicio.</p>
+                        <p>Clientes con menor antigüedad tienen mayor riesgo de cancelar.</p>
                         <img src="{{ url_for('static', filename='trainedImages/churn_tenure.png') }}"
                             alt="Churn vs Tenure">
                     </div>
 
                     <div class="graph-card">
                         <h4>Churn según Tipo de Contrato</h4>
-                        <p>Los contratos mensuales están asociados con mayor tasa de abandono.</p>
+                        <p>Contratos mensuales están más asociados a cancelaciones.</p>
                         <img src="{{ url_for('static', filename='trainedImages/churn_contract.png') }}"
                             alt="Churn vs Contract">
                     </div>
 
                     <div class="graph-card">
                         <h4>Churn según Tipo de Internet</h4>
-                        <p>Clientes con Internet por fibra óptica tienen más probabilidad de cancelar que los que usan
-                            DSL.</p>
+                        <p>Mayor cancelación entre usuarios de fibra óptica.</p>
                         <img src="{{ url_for('static', filename='trainedImages/churn_internet.png') }}"
                             alt="Churn vs Internet">
                     </div>
 
                     <div class="graph-card">
                         <h4>Churn y Servicio de StreamingTV</h4>
-                        <p>Este servicio adicional también presenta relación con la pérdida de clientes.</p>
+                        <p>La presencia del servicio influye en la decisión del cliente.</p>
                         <img src="{{ url_for('static', filename='trainedImages/churn_streamingtv.png') }}"
                             alt="Churn vs StreamingTV">
                     </div>
 
                     <div class="graph-card mb-4">
                         <h4>Churn y Servicio Telefónico</h4>
-                        <p>El uso o no del servicio telefónico también se asocia con la permanencia o abandono del
-                            cliente.</p>
+                        <p>Uso del servicio telefónico correlaciona con retención.</p>
                         <img src="{{ url_for('static', filename='trainedImages/churn_phoneservice.png') }}"
                             alt="Churn vs PhoneService">
                     </div>
@@ -128,3 +153,5 @@
         <p>Kelly Johanna Garzon Jenny | Jenny Paola Rodriguez</p>
     </footer>
 </body>
+
+</html>

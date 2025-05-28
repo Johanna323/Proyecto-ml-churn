@@ -146,8 +146,8 @@ def predecir():
 
             df_user['Predicción_Churn'] = predicciones
             df_original['Predicción_Churn'] = predicciones
-            df_original['Predicción_Churn'] = df_original['Predicción_Churn'].map({
-                                                                                  0: 'No', 1: 'Sí'})
+            df_original['Predicción_Churn'] = df_original['Predicción_Churn'].map({0: 'No', 1: 'Sí'})
+            df_original['tenure_group'] = pd.cut(df_original['tenure'], bins=[0, 12, 24, 36, 48, 60, 72], labels=["0-12", "13-24", "25-36", "37-48", "49-60", "61-72"])
 
             columnas_vista = ['tenure', 'MonthlyCharges', 'Contract', 'InternetService',
                               'StreamingTV', 'StreamingMovies', 'Predicción_Churn']
@@ -157,6 +157,7 @@ def predecir():
             churn_counts = df_user['Predicción_Churn'].value_counts().to_dict()
             churn_si = churn_counts.get(1, 0)
             churn_no = churn_counts.get(0, 0)
+            total_datos = churn_si + churn_no
 
             contract_summary = churn_summary_by_column(df_original, 'Contract')
             internet_summary = churn_summary_by_column(
@@ -167,6 +168,7 @@ def predecir():
                 df_original, 'StreamingTV')
             streaming_movies_summary = churn_summary_by_column(
                 df_original, 'StreamingMovies')
+            tenure_summary = churn_summary_by_column(df_original, 'tenure_group')
 
             # Crear carpeta si no existe
             os.makedirs('static/modelImages', exist_ok=True)
@@ -190,8 +192,7 @@ def predecir():
                                  f'static/modelImages/{imagenes["genero"]}')
             plot_churn_by_column(df_original, 'PaymentMethod',
                                  f'static/modelImages/{imagenes["pago"]}')
-            plot_churn_ratio(
-                df_original, f'static/modelImages/{imagenes["resumen"]}')
+            plot_churn_ratio(df_original, f'static/modelImages/{imagenes["resumen"]}')
             plot_churn_by_column(df_original, 'Contract',
                                  f'static/modelImages/{imagenes["contract"]}')
             plot_churn_by_column(df_original, 'InternetService',
@@ -202,8 +203,7 @@ def predecir():
                                  f'static/modelImages/{imagenes["streamingtv"]}')
             plot_churn_by_column(df_original, 'StreamingMovies',
                                  f'static/modelImages/{imagenes["streamingmovies"]}')
-            plot_tenure_histogram(
-                df_original, f'static/modelImages/{imagenes["tenure"]}')
+            plot_tenure_histogram( df_original, f'static/modelImages/{imagenes["tenure"]}')
 
             # Matriz de confusión
             cm = confusion_matrix(df_user['Predicción_Churn'], predicciones)
@@ -218,11 +218,13 @@ def predecir():
                 tabla=tabla_individual,
                 churn_si=churn_si,
                 churn_no=churn_no,
+                total_datos = total_datos,
                 contract_summary=contract_summary,
                 internet_summary=internet_summary,
                 phone_summary=phone_summary,
                 streaming_tv_summary=streaming_tv_summary,
                 streaming_movies_summary=streaming_movies_summary,
+                tenure_summary = tenure_summary,
                 imagenes=imagenes
             )
 

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Proyecto Final | CHURN</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap" rel="stylesheet" />
 </head>
 
 <body>
@@ -24,106 +24,86 @@
                 <li><a href="/modelo-regresion-logistica">Modelo</a></li>
             </ul>
         </nav>
+
         <main class="container__content" id="main-content">
             <div class="content__info">
                 <h1>Fase Cuatro: Evaluación del Modelo</h1>
 
                 <h3>Métricas de Desempeño</h3>
                 <ul>
-                    <li><strong>Accuracy:</strong> mide la proporción de predicciones correctas sobre el total.</li>
-                    <li><strong>Precision:</strong> mide cuántas de las predicciones positivas fueron realmente
-                        positivas.</li>
-                    <li><strong>Recall:</strong> indica cuántos de los casos positivos fueron correctamente detectados.
-                    </li>
-                    <li><strong>F1-Score:</strong> balance entre precision y recall, útil cuando hay clases
-                        desbalanceadas.</li>
-                    <li><strong>ROC-AUC:</strong> representa la capacidad del modelo para distinguir entre clases.</li>
+                    <li><strong>Accuracy:</strong> proporción de predicciones correctas.</li>
+                    <li><strong>Precision:</strong> cuántas predicciones positivas fueron correctas.</li>
+                    <li><strong>Recall:</strong> cuántos casos positivos fueron correctamente identificados.</li>
+                    <li><strong>F1-Score:</strong> balance entre precisión y recall.</li>
+                    <li><strong>ROC-AUC:</strong> capacidad del modelo para distinguir entre clases.</li>
                 </ul>
 
                 <h3>Validación Cruzada</h3>
-                <p>
-                    Se aplicó validación cruzada <strong>k-fold</strong> (k=5), dividiendo los datos en varios
-                    subconjuntos para entrenar y evaluar el modelo múltiples veces.
-                    Con la validación cruzada, se reduce el riesgo de que los resultados sean extremos y se obtiene una
-                    medida más realista de qué tan bien funcionará el modelo con nuevos datos.
-                </p>
-                <p><strong>Funcionamiento:</strong></p>
-                <ol>
-                    <li>Se divide el conjunto de datos en 5 partes iguales (porque k = 5).</li>
-                    <li>El modelo se entrena 5 veces, cada vez usando 4 partes para entrenar y 1 parte diferente para
-                        probar.</li>
-                    <li>Cada parte se usa una vez como prueba y cuatro veces como entrenamiento.</li>
-                    <li>Se promedian los resultados para obtener una evaluación más precisa y confiable.</li>
-                </ol>
+                <p>Se aplicó validación cruzada <strong>k-fold</strong> (k=5), reduciendo el riesgo de sobreajuste y
+                    proporcionando una evaluación más realista.</p>
 
                 <h3>Análisis de Riesgos</h3>
                 <ul>
-                    <li><strong>Sobreajuste (overfitting):</strong> cuando el modelo aprende demasiado los datos de
-                        entrenamiento y no generaliza bien.</li>
-                    <li><strong>Subajuste (underfitting):</strong> cuando el modelo es demasiado simple y no logra
-                        capturar la complejidad de los datos.</li>
-                    <li><strong>Sesgos:</strong> en variables desbalanceadas, como el desequilibrio entre los casos de
-                        "Churn" y "No Churn".</li>
+                    <li><strong>Sobreajuste:</strong> el modelo aprende demasiado bien los datos de entrenamiento.</li>
+                    <li><strong>Subajuste:</strong> el modelo es demasiado simple y no captura los patrones.</li>
+                    <li><strong>Sesgos:</strong> variables desbalanceadas como Churn.</li>
                 </ul>
-
-                <h3>Revisión con Expertos</h3>
-                <p>
-                    Dado que este es un proyecto académico, no se realizó una validación con expertos del dominio. Sin
-                    embargo, se procuró seguir buenas prácticas de machine learning para asegurar resultados razonables
-                    y bien fundamentados.
-                </p>
 
                 <h3>Resumen de Métricas del Modelo</h3>
                 <div class="metrics-cards">
                     <div class="card-metric">
                         <h4>Accuracy</h4>
                         <p
-                            class="{% if resumen['Accuracy']|float < 0.70 %}bajo{% elif resumen['Accuracy']|float < 0.85 %}medio{% else %}alto{% endif %}">
-                            {{ resumen['Accuracy'] }}
-                        </p>
+                            class="{% if resumen['Accuracy']|float < 0.70 %}bajo{% elif resumen['Accuracy']|float < 0.80 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Accuracy'] }}</p>
                     </div>
                     <div class="card-metric">
                         <h4>Precision</h4>
                         <p
-                            class="{% if resumen['Precision']|float < 0.70 %}bajo{% elif resumen['Precision']|float < 0.85 %}medio{% else %}alto{% endif %}">
-                            {{ resumen['Precision'] }}
-                        </p>
+                            class="{% if resumen['Precision']|float < 0.50 %}bajo{% elif resumen['Precision']|float < 0.65 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Precision'] }}</p>
                     </div>
                     <div class="card-metric">
                         <h4>Recall</h4>
                         <p
-                            class="{% if resumen['Recall']|float < 0.70 %}bajo{% elif resumen['Recall']|float < 0.85 %}medio{% else %}alto{% endif %}">
-                            {{ resumen['Recall'] }}
-                        </p>
+                            class="{% if resumen['Recall']|float < 0.60 %}bajo{% elif resumen['Recall']|float < 0.80 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['Recall'] }}</p>
                     </div>
                     <div class="card-metric">
                         <h4>F1-score</h4>
                         <p
-                            class="{% if resumen['F1-score']|float < 0.70 %}bajo{% elif resumen['F1-score']|float < 0.85 %}medio{% else %}alto{% endif %}">
-                            {{ resumen['F1-score'] }}
-                        </p>
+                            class="{% if resumen['F1-score']|float < 0.60 %}bajo{% elif resumen['F1-score']|float < 0.75 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['F1-score'] }}</p>
                     </div>
                     <div class="card-metric">
                         <h4>ROC-AUC</h4>
                         <p
-                            class="{% if resumen['ROC-AUC']|float < 0.70 %}bajo{% elif resumen['ROC-AUC']|float < 0.85 %}medio{% else %}alto{% endif %}">
-                            {{ resumen['ROC-AUC'] }}
-                        </p>
+                            class="{% if resumen['ROC-AUC']|float < 0.75 %}bajo{% elif resumen['ROC-AUC']|float < 0.85 %}medio{% else %}alto{% endif %}">
+                            {{ resumen['ROC-AUC'] }}</p>
                     </div>
                 </div>
 
                 <div class="legend">
                     <h4>Interpretación de colores:</h4>
                     <ul>
-                        <li><span class="dot bajo"></span> Bajo desempeño (&lt; 0.70)</li>
-                        <li><span class="dot medio"></span> Desempeño medio (0.70 - 0.85)</li>
-                        <li><span class="dot alto"></span> Buen desempeño (&gt; 0.85)</li>
+                        <li><span class="dot bajo"></span> Bajo desempeño</li>
+                        <li><span class="dot medio"></span> Desempeño medio</li>
+                        <li><span class="dot alto"></span> Buen desempeño</li>
                     </ul>
                 </div>
 
-
                 <h3 class="mt-4">Reporte Completo del Modelo</h3>
                 <pre class="metricas-box">{{ metricas_completas }}</pre>
+
+                <h3 class="mt-5">Matriz de Confusión</h3>
+                <p>
+                    La matriz de confusión muestra cómo el modelo clasifica correctamente o se equivoca al predecir si
+                    un cliente cancelará o no el servicio.
+                    Las verdaderas clases están en las filas, y las predicciones del modelo en las columnas.
+                </p>
+                <img src="{{ url_for('static', filename='trainedImages/matriz_confusion.png') }}"
+                    alt="Matriz de Confusión">
+
             </div>
         </main>
     </div>
@@ -132,3 +112,5 @@
         <p>Kelly Johanna Garzon Jenny | Jenny Paola Rodriguez</p>
     </footer>
 </body>
+
+</html>
