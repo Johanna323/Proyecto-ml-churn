@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Final | CHURN</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap" rel="stylesheet">
@@ -44,7 +45,34 @@
                             <p class="card-text">Probablemente conservarán el servicio.</p>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header">Total de clientes analizados</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ total_datos }} clientes</h5>
+                            <p class="card-text">Fueron procesados por el modelo.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <h4 class="mt-4">Resumen por Ternure (antiguedad)</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ternure</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in tenure_summary ['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ tenure_summary ['No'][tipo] }}</td>
+                            <td class="churn-si">{{ tenure_summary ['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
                 <h4 class="mt-4">Resumen por tipo de contrato</h4>
                 <table class="table table-bordered">
@@ -65,6 +93,149 @@
                         {% endfor %}
                     </tbody>
                 </table>
+
+                <h3 class="mt-5">Visualización de Resultados</h3>
+                <p class="mb-4">A continuación se presentan las gráficas generadas a partir de los datos cargados, las
+                    cuales permiten interpretar mejor los factores relacionados con la pérdida de clientes (churn).</p>
+
+                <div class="chart-gallery">
+
+                    <div class="chart-card">
+                        <h4>Matriz de Confusión del Modelo</h4>
+                        <p>Muestra la cantidad de aciertos y errores del modelo al clasificar clientes como propensos o
+                            no al abandono.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.grafica) }}" class="img-fluid"
+                            alt="Matriz de Confusión">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Distribución de Clientes según Antigüedad</h4>
+                        <p>Clientes con menor antigüedad en el servicio tienden a cancelar más, según el análisis por
+                            grupos de tenure.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.tenure) }}" class="img-fluid"
+                            alt="Gráfica Tenure">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Tipo de Contrato</h4>
+                        <p>Los contratos mensuales presentan mayor índice de cancelación en comparación con contratos
+                            anuales o bianuales.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.contract) }}"
+                            class="img-fluid" alt="Gráfica Contract">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Tipo de Internet</h4>
+                        <p>Clientes con servicio de fibra óptica tienden a cancelar más que quienes usan DSL o no tienen
+                            internet.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.internet) }}"
+                            class="img-fluid" alt="Gráfica Internet">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn según Servicio Telefónico</h4>
+                        <p>El acceso a servicio telefónico puede influir en la decisión del cliente de mantenerse con la
+                            empresa.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.phone) }}" class="img-fluid"
+                            alt="Gráfica PhoneService">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn y Servicio de StreamingTV</h4>
+                        <p>El servicio de televisión por streaming también se asocia con la probabilidad de abandono del
+                            cliente.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingtv)  }}"
+                            class="img-fluid" alt="Gráfica StreamingTV">
+                    </div>
+
+                    <div class="chart-card">
+                        <h4>Churn y Servicio de StreamingMovies</h4>
+                        <p>Clientes que usan servicios de películas en streaming también presentan ciertas tendencias de
+                            churn.</p>
+                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingmovies) }}"
+                            class="img-fluid" alt="Gráfica StreamingMovies">
+                    </div>
+                </div>
+                <h4 class="mt-4">Resumen por tipo de conexión a Internet</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Internet</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in internet_summary['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ internet_summary['No'][tipo] }}</td>
+                            <td class="churn-si">{{ internet_summary['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Resumen por tipo de Servicio de TV</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Servicio de TV</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in streaming_tv_summary['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ streaming_tv_summary['No'][tipo] }}</td>
+                            <td class="churn-si">{{ streaming_tv_summary['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Resumen por Servicio de Streaming de Películas</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Streaming de Películas</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in streaming_movies_summary['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ streaming_movies_summary['No'][tipo] }}</td>
+                            <td class="churn-si">{{ streaming_movies_summary['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Resumen por Servicio de Telefonía</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Servicio de telefonía</th>
+                            <th class="text-success">Conservará</th>
+                            <th class="text-danger">Abandonará</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo in phone_summary['No'].keys() %}
+                        <tr>
+                            <td>{{ tipo }}</td>
+                            <td class="churn-no">{{ phone_summary['No'][tipo] }}</td>
+                            <td class="churn-si">{{ phone_summary['Sí'][tipo] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
 
                 {% if tabla %}
                 <h4 class="mt-4">Tabla de predicción detallada</h4>
@@ -98,67 +269,7 @@
                         </tbody>
                     </table>
                 </div>
-
-
                 {% endif %}
-                <h3 class="mt-5">Visualización de Resultados</h3>
-                <p class="mb-4">A continuación se presentan las gráficas generadas a partir de los datos cargados, las
-                    cuales permiten interpretar mejor los factores relacionados con la pérdida de clientes (churn).</p>
-
-                <div class="chart-gallery">
-
-                    <div class="chart-card">
-                        <h4>Matriz de Confusión del Modelo</h4>
-                        <p>Muestra la cantidad de aciertos y errores del modelo al clasificar clientes como propensos o
-                            no al abandono.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.grafica) }}" class="img-fluid" alt="Matriz de Confusión">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Churn según Tipo de Contrato</h4>
-                        <p>Los contratos mensuales presentan mayor índice de cancelación en comparación con contratos
-                            anuales o bianuales.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.contract) }}" class="img-fluid" alt="Gráfica Contract">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Churn según Tipo de Internet</h4>
-                        <p>Clientes con servicio de fibra óptica tienden a cancelar más que quienes usan DSL o no tienen
-                            internet.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.internet) }}" class="img-fluid" alt="Gráfica Internet">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Churn según Servicio Telefónico</h4>
-                        <p>El acceso a servicio telefónico puede influir en la decisión del cliente de mantenerse con la
-                            empresa.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.phone) }}" class="img-fluid" alt="Gráfica PhoneService">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Churn y Servicio de StreamingTV</h4>
-                        <p>El servicio de televisión por streaming también se asocia con la probabilidad de abandono del
-                            cliente.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingtv)  }}" class="img-fluid" alt="Gráfica StreamingTV">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Churn y Servicio de StreamingMovies</h4>
-                        <p>Clientes que usan servicios de películas en streaming también presentan ciertas tendencias de
-                            churn.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.streamingmovies) }}" class="img-fluid" alt="Gráfica StreamingMovies">
-                    </div>
-
-                    <div class="chart-card">
-                        <h4>Distribución de Clientes según Antigüedad</h4>
-                        <p>Clientes con menor antigüedad en el servicio tienden a cancelar más, según el análisis por
-                            grupos de tenure.</p>
-                        <img src="{{ url_for('static', filename='modelImages/' + imagenes.tenure) }}" class="img-fluid" alt="Gráfica Tenure">
-                    </div>
-
-                </div>
-
-
             </div>
         </main>
     </div>

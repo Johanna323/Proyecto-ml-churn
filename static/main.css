@@ -176,7 +176,10 @@ button:hover,
     text-align: left;
     display: flex;
     flex-direction: column;
-    margin: 0 16px 0 0;
+}
+
+.card {
+    margin: 0;
 }
 
 .card:hover {
@@ -374,6 +377,7 @@ tr:hover {
     justify-content: flex-start;
     gap: 1rem;
     margin-top: 2rem;
+    align-items: stretch;
 }
 
 .resume-cards-container .card {
@@ -398,6 +402,7 @@ tr:hover {
     margin-bottom: 0.5rem;
     border-bottom: 1px solid #eee;
     padding-bottom: 0.3rem;
+    line-height: 1;
 }
 
 .card-body {
@@ -441,7 +446,6 @@ tr:hover {
 .card-metric p {
     font-size: 1.3rem;
     font-weight: bold;
-    color: #008080;
     margin-top: 0.5rem;
 }
 
@@ -453,19 +457,43 @@ tr:hover {
     overflow-x: auto;
 }
 
-/* Colores condicionales para métricas */
+/* Colores para rendimiento del modelo */
 .bajo {
-    color: #d32f2f; /* rojo */
-    font-weight: bold;
+  color: #d32f2f; /* Rojo fuerte */
+  font-weight: bold;
 }
+
 .medio {
-    color: #f9a825; /* amarillo oscuro */
-    font-weight: bold;
+  color: #f9a825; /* Amarillo/naranja */
+  font-weight: bold;
 }
+
 .alto {
-    color: #388e3c; /* verde */
-    font-weight: bold;
+  color: #388e3c; /* Verde oscuro */
+  font-weight: bold;
 }
+
+/* Indicadores tipo "dot" en la leyenda */
+.legend .dot {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.dot.bajo {
+  background-color: #d32f2f;
+}
+
+.dot.medio {
+  background-color: #f9a825;
+}
+
+.dot.alto {
+  background-color: #388e3c;
+}
+
 
 .legend {
     margin-top: 2rem;
@@ -485,26 +513,6 @@ tr:hover {
     font-size: 0.95rem;
     display: flex;
     align-items: center;
-}
-
-.dot {
-    width: 14px;
-    height: 14px;
-    display: inline-block;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-}
-
-.dot.bajo {
-    background-color: #d32f2f;
-}
-
-.dot.medio {
-    background-color: #f9a825;
-}
-
-.dot.alto {
-    background-color: #388e3c;
 }
 
 .section-title {
